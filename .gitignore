@@ -1,0 +1,45 @@
+# -----------------------
+# Python
+# -----------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+*.manifest
+*.spec
+
+# -----------------------
+# Django / Databases
+# -----------------------
+db.sqlite3
+*.db
+*.sqlite3
+*.log
+media/
+staticfiles/
+.env
+
+# -----------------------
+# Virtual Environments
+# -----------------------
+venv/
+env/
+.venv/
+ENV/
+
+# -----------------------
+# IDE / Editors
+# -----------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# -----------------------
+# OS generated files
+# -----------------------
+.DS_Store
+Thumbs.db

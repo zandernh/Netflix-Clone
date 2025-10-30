@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ movie_details.title }} - Playback</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-gray-900 text-white">
+    <!-- Navbar -->
+    <header class="p-5 flex justify-between items-center">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png"
+        height="30"
+        alt="Netflix Logo"
+        width="110"
+      />
+      <nav class="flex space-x-5">
+        <a href="/">Home</a>
+        <a href="/series/">Series</a>
+        <a href="/films/">Films</a>
+        <a href="/new-popular/">New & Popular</a>
+      </nav>
+      <div class="flex space-x-5 items-center">
+        <input
+          type="search"
+          placeholder="Search"
+          class="bg-gray-700 p-2 rounded"
+        />
+        <button class="bg-red-600 text-white p-2 rounded hover:bg-red-500">
+          Search
+        </button>
+        <div class="relative">
+          <a href="/logout" class="block p-2">Logout</a>
+        </div>
+      </div>
+    </header>
+
+    <hr class="border-gray-700" />
+
+    <!-- Main Content -->
+    <div class="container mx-auto mt-10">
+      <!-- Title & Back -->
+      <div class="flex items-center justify-between">
+        <h2 class="text-3xl font-semibold">{{ movie_details.title }}</h2>
+        <a href="/" class="text-gray-400 hover:text-white"
+          >← Back to browsing</a
+        >
+      </div>
+
+      <!-- Video Player -->
+      <div class="mt-8">
+        <video
+          class="w-full h-auto"
+          controls
+          controlsList="nodownload"
+          disablePictureInPicture
+        >
+          <source src="{{ movie_details.video_url }}" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Description -->
+      <div class="mt-6">
+        <h3 class="text-xl font-semibold mb-2">About the Movie</h3>
+        <p>{{ movie_details.description }}</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,415 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'assets/style.css' %}"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+
+  <body class="text-white" style="background-color: #141414">
+    <header class="p-5 flex justify-between items-center">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png"
+        height="30"
+        alt="Netflix Logo"
+        width="110"
+      />
+
+      <nav class="flex space-x-5">
+        <span><a href="/">Home</a></span>
+
+        <div class="relative inline-block text-left">
+          <!-- Clickable button -->
+          <span
+            id="dropdownMenuButton"
+            class="cursor-pointer bg-[#141414] px-3 py-2 rounded hover:bg-gray-700"
+          >
+            Genres ▼
+          </span>
+
+          <!-- Scrollable dropdown -->
+          <div
+            id="dropdownMenu"
+            class="hidden absolute z-50 mt-1 max-h-64 w-48 overflow-y-auto bg-[#141414] text-white rounded shadow-lg"
+          >
+            <a
+              href="/genre/action/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Action</a
+            >
+            <a
+              href="/genre/adventure/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Adventure</a
+            >
+            <a
+              href="/genre/animated/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Animated</a
+            >
+            <a
+              href="/genre/biographical/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Biographical</a
+            >
+            <a
+              href="/genre/comedy/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Comedy</a
+            >
+            <a
+              href="/genre/coming-of-age/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Coming-of-age</a
+            >
+            <a
+              href="/genre/crime/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Crime</a
+            >
+            <a
+              href="/genre/drama/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Drama</a
+            >
+            <a
+              href="/genre/fantasy/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Fantasy</a
+            >
+            <a
+              href="/genre/historical/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Historical</a
+            >
+            <a
+              href="/genre/historical-drama/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Historical Drama</a
+            >
+            <a
+              href="/genre/horror/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Horror</a
+            >
+            <a
+              href="/genre/mystery/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Mystery</a
+            >
+            <a
+              href="/genre/neo-western/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Neo-Western</a
+            >
+            <a
+              href="/genre/romantic-comedy/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Romantic Comedy</a
+            >
+            <a
+              href="/genre/satire/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Satire</a
+            >
+            <a
+              href="/genre/science-fiction/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Science Fiction</a
+            >
+            <a
+              href="/genre/supernatural/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Supernatural</a
+            >
+            <a
+              href="/genre/thriller/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Thriller</a
+            >
+            <a
+              href="/genre/war/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >War</a
+            >
+            <a
+              href="/genre/western/"
+              class="block px-2 py-1 hover:bg-gray-700 rounded"
+              >Western</a
+            >
+          </div>
+        </div>
+
+        <span><a href="/my-list">My List</a></span>
+      </nav>
+
+      <div class="flex space-x-5 items-center">
+        <form action="search" method="POST">
+          {% csrf_token %}
+          <input
+            type="search"
+            name="search_term"
+            placeholder="Search"
+            class="bg-gray-700 p-2 rounded"
+          />
+          <button class="bg-red-600 text-white p-2 rounded hover:bg-red-500">
+            Search
+          </button>
+        </form>
+        <div class="relative">
+          <a href="#" class="block p-2">Welcome, {{user.username}}</a>
+          <a href="/logout" class="block p-2">Logout</a>
+        </div>
+      </div>
+    </header>
+
+    <section
+      class="relative h-screen md:h-[80vh] w-full flex items-center px-4 sm:px-6 lg:px-10"
+      style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('{{featured_movie.image_cover_url}}'); background-size: cover; background-position: center;"
+    >
+      <div>
+        <h1 style="color: white" class="text-5xl mb-5">
+          {{featured_movie.title}}
+        </h1>
+        <p style="color: white" class="mb-5">{{featured_movie.description}}</p>
+        <div class="flex space-x-4">
+          <a href="/watch/{{featured_movie.uu_id}}">
+            <button
+              class="bg-red-600 text-white p-2 px-5 rounded hover:bg-red-500"
+            >
+              Play
+            </button>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-10 px-4 sm:px-6 lg:px-8">
+      <h2 class="text-xl mb-5">Popular on Netflix</h2>
+
+      <!-- GRID: 6 columns on desktop, responsive -->
+      <div
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5 w-full px-4 sm:px-6 lg:px-8"
+      >
+        {% for movie in movies %}
+        <div
+          class="relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow cursor-pointer film-card bg-gray-200"
+          onclick="showModal(this)"
+          data-title="{{ movie.title }}"
+          data-description="{{ movie.description }}"
+          data-release-date="{{ movie.release_date|date:'Y' }}"
+          data-genres="{{ movie.genre_list }}"
+          data-length="{{ movie.length }}"
+          data-image-card-url="{{ movie.image_card_url }}"
+          data-image-cover-url="{{ movie.image_cover_url }}"
+          data-video-url="{{ movie.video_url }}"
+          data-uuid="{{ movie.uu_id }}"
+          style="background-image: url('{{ movie.image_card_url }}');
+               background-size: cover;
+               background-position: center;
+               aspect-ratio: 292 / 166;"
+        >
+          <!-- Title overlay -->
+          <div
+            class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2 text-white text-xs font-medium truncate"
+          >
+            {{ movie.title }}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="movieModal">
+      <div class="modal-content">
+        <div class="flex justify-between">
+          <h2 class="text-xl mb-5">Movie Title</h2>
+          <button onclick="hideModal()">X</button>
+        </div>
+        <img
+          src="https://bloximages.newyork1.vip.townnews.com/newsrecord.org/content/tncms/assets/v3/editorial/8/1e/81ea500c-45ac-11ee-a11e-a7402910a7e7/64ecaae69243a.image.jpg"
+          alt="Movie Image"
+          class="mb-5 w-full h-auto object-cover mx-auto"
+        />
+        <div class="flex justify-between mb-5">
+          <span>Year: 2023</span>
+          <span>Length: 2h 15min</span>
+        </div>
+        <p class="mb-5">Detailed information about the movie.</p>
+        <div class="flex space-x-4 mb-5">
+          <a class="play-button" href="#">
+            <button
+              class="bg-red-600 text-white p-2 px-5 rounded hover:bg-red-500"
+            >
+              Play
+            </button>
+          </a>
+          <button
+            id="addToListButton"
+            onclick="addItemToList()"
+            class="border border-white text-white p-2 px-5 rounded hover:bg-gray-700"
+          >
+            Add to List
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ===== DROPDOWN =====
+      document
+        .getElementById("dropdownMenuButton")
+        ?.addEventListener("click", function () {
+          const menu = document.getElementById("dropdownMenu");
+          menu.classList.toggle("hidden");
+        });
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("dropdownMenu");
+        const button = document.getElementById("dropdownMenuButton");
+        if (
+          menu &&
+          button &&
+          !button.contains(event.target) &&
+          !menu.contains(event.target)
+        ) {
+          menu.classList.add("hidden");
+        }
+      });
+
+      // ===== MODAL =====
+      function showModal(element) {
+        if (!element) return;
+
+        const modal = document.getElementById("movieModal");
+        if (!modal) return;
+
+        // Data attributes
+        const title = element.dataset.title || "";
+        const description = element.dataset.description || "";
+        const releaseDate = element.dataset.releaseDate || "";
+        const genre = element.dataset.genre || "";
+        const length = element.dataset.length || "";
+        const imageCoverUrl = element.dataset.imageCoverUrl || "";
+        const uuid = element.dataset.uuid || "";
+        const watchUrl = "/watch/" + uuid + "/";
+
+        // Update modal content
+        modal.querySelector(".modal-content h2").textContent = title;
+        modal.querySelector(".modal-content img").src = imageCoverUrl;
+        modal.querySelector(".modal-content img").alt = title + " Cover Image";
+        modal.querySelector(
+          ".modal-content .flex span:first-child"
+        ).textContent = "Year: " + releaseDate;
+        modal.querySelector(
+          ".modal-content .flex span:nth-child(2)"
+        ).textContent = "Genre: " + genre;
+        modal.querySelector(
+          ".modal-content .flex span:last-child"
+        ).textContent = "Length: " + length + "min";
+        modal.querySelector(".modal-content p").textContent = description;
+        modal.querySelector(".modal-content a.play-button").href = watchUrl;
+
+        // Show modal
+        modal.style.display = "block";
+        setTimeout(() => modal.classList.add("modal-show"), 50);
+
+        // ===== CHECK IF MOVIE IS IN USER'S LIST =====
+        const button = $("#addToListButton");
+        $.ajax({
+          url: "{% url 'my-list-api' %}",
+          type: "GET",
+          success: function (data) {
+            if (data.movie_uuids.includes(uuid)) {
+              button
+                .text("Remove from List")
+                .data("in-list", true)
+                .removeClass("bg-red-600 text-white hover:bg-red-500")
+                .addClass("border border-white text-white hover:bg-gray-700");
+            } else {
+              button
+                .text("Add to List")
+                .data("in-list", false)
+                .removeClass("border border-white text-white hover:bg-gray-700")
+                .addClass("bg-red-600 text-white hover:bg-red-500");
+            }
+          },
+          error: function (xhr, errmsg, err) {
+            console.error("Error checking list status: " + errmsg);
+          },
+        });
+      }
+
+      function hideModal() {
+        const modal = document.getElementById("movieModal");
+        if (!modal) return;
+
+        modal.classList.remove("modal-show");
+        setTimeout(() => {
+          modal.style.display = "none";
+        }, 300);
+      }
+
+      // Close modal when clicking outside
+      window.onclick = function (event) {
+        const modal = document.getElementById("movieModal");
+        if (modal && event.target === modal) {
+          hideModal();
+        }
+      };
+
+      // ===== ADD / REMOVE FROM LIST =====
+      function addItemToList() {
+        const modal = document.getElementById("movieModal");
+        if (!modal) return;
+
+        const movieID = modal.querySelector(
+          ".modal-content a.play-button"
+        ).href;
+        const button = $("#addToListButton");
+
+        $.ajax({
+          url: "{% url 'add-to-list' %}",
+          type: "POST",
+          data: {
+            movie_id: movieID,
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+          },
+          success: function (data) {
+            if (data.status === "added") {
+              button
+                .text("Remove from List")
+                .data("in-list", true)
+                .removeClass("border border-white text-white hover:bg-gray-700")
+                .addClass("bg-red-600 text-white hover:bg-red-500");
+            } else if (data.status === "removed") {
+              button
+                .text("Add to List")
+                .data("in-list", false)
+                .removeClass("bg-red-600 text-white hover:bg-red-500")
+                .addClass("border border-white text-white hover:bg-gray-700");
+            }
+            console.log(data.status + " item successfully!");
+          },
+          error: function (xhr, errmsg, err) {
+            console.error("Error updating list: " + errmsg);
+          },
+        });
+      }
+    </script>
+  </body>
+</html>
