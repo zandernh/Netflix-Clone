@@ -3,6 +3,11 @@
 A Netflix-style streaming web application built in Django, featuring user authentication, dynamic movie browsing, personalized lists, and cloud-hosted media.
 This project showcases backend engineering, database design, and API integration following modern full-stack best practices.
 
+⚠️ Note on Live Demo:
+The live demo on Render may return a 502 Bad Gateway due to memory limits on the free Render plan. 
+For a fully stable experience, I would highly recommend cloning the project and running it locally - there are instructions for how to achieve this below.
+This has been one of my most ambitious projects yet, and currently I do not have the budge to host it on a paid plan to extend the memory limits.
+
 [🌐 Live Demo](https://https://netflix-clone-fhwh.onrender.com/)
 
 ---
@@ -44,6 +49,7 @@ To run this app locally:
 ### 1. Clone the repository
 
 git clone https://github.com/zandernh/netflix-clone.git
+
 cd netflix-clone
 
 ### 2. Set up a viritual enviornment
