@@ -108,7 +108,7 @@ Because I’m using the AWS free tier, the nearest available server region was S
 
 ## 📂 File Structure
 
-![Netflix Clone File Structure](filestructure.JPG)
+![Netflix Clone File Structure](firetructure.JPG)
 
 ---
 
